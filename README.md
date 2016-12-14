@@ -14,7 +14,7 @@ maintains "*I don't have time to write tests*" or
 "*Writing tests for my code takes longer*" and then acts *surprised* when
 everything starts breaking ... "*it was working this morning*" ...
 
-- - -
+- - --
 
 
 ## Installation
