@@ -1,156 +1,157 @@
-#node-coveralls
+Learn Coveralls 
+===============
+[![Build Status](https://travis-ci.org/nelsonic/learn-coveralls.io.png?branch=master)](https://travis-ci.org/nelsonic/learn-coveralls.io) [![Coverage Status](https://coveralls.io/repos/nelsonic/learn-coveralls.io/badge.png?branch=master)](https://coveralls.io/r/nelsonic/learn-coveralls.io?branch=master) [![Code Climate](https://codeclimate.com/github/nelsonic/learn-coveralls.io.png)](https://codeclimate.com/github/nelsonic/learn-coveralls.io) [![Dependencies](https://david-dm.org/nelsonic/learn-coveralls.io.png?theme=shields.io)](https://david-dm.org/nelsonic/learn-coveralls.io)
 
-[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Codeship Build Status][codeship-image]][codeship-url]
-[![Known Vulnerabilities](https://snyk.io/test/github/nickmerwin/node-coveralls/badge.svg)](https://snyk.io/test/github/nickmerwin/node-coveralls)
+Coveralls helps track code coverage in your Node.JS & Browser JS projects
 
-[Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.
+![Rainbow Unicorns](http://i.imgur.com/HRG0EVa.png "Rainbow Unicorns")
 
-Supported CI services:  [travis-ci](https://travis-ci.org/), [codeship](https://www.codeship.io/), [circleci](https://circleci.com/), [jenkins](http://jenkins-ci.org/), [Gitlab CI](http://gitlab.com/)
+***100% Code Coverage*** is no Myth.
+Its not only *possible*, it needs to be the ***New Normal***.
 
-##Installation:
-Add the latest version of `coveralls` to your package.json:
-```
-npm install coveralls --save-dev
-```
+## Intro
 
-If you're using mocha, add `mocha-lcov-reporter` to your package.json:
-```
-npm install mocha-lcov-reporter --save-dev
-```
+### What is Code Coverage?
 
-##Usage:
+Code coverage measures how much of your source code is tested. 
+A program with high code coverage has been more thoroughly tested 
+and has a *lower chance* of containing software *bugs* than a program
+with low code coverage.
 
-This script ( `bin/coveralls.js` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://mochajs.org/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
+#### Read more:
 
-Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
+- Wikipedia article: http://en.wikipedia.org/wiki/Code_coverage
+- What is Code Coverage: http://stackoverflow.com/questions/1158518/what-is-code-coverage
+- StackOverflow Discussion:  <br />
+http://stackoverflow.com/questions/195008/what-is-code-coverage-and-how-do-you-measure-it
 
-This library currently supports [travis-ci](https://travis-ci.org/) with no extra effort beyond piping the lcov output to coveralls. However, if you're using a different build system, there are a few environment variables that are necessary:
-* COVERALLS_SERVICE_NAME  (the name of your build system)
-* COVERALLS_REPO_TOKEN (the secret repo token from coveralls.io)
+#### Note
 
-There are optional environment variables for other build systems as well:
-* COVERALLS_SERVICE_JOB_ID  (an id that uniquely identifies the build job)
-* COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your
-build system's date/time if you don't set it.)
-* COVERALLS_PARALLEL (more info here: https://coveralls.zendesk.com/hc/en-us/articles/203484329)
+In the absence of other *objective* measures of code quality, 
+projects I have worked on in the past use code coverage as our benchmark. 
 
-### [Mocha](http://mochajs.org/) + [Blanket.js](https://github.com/alex-seville/blanket)
-- Install [blanket.js](http://blanketjs.org/)
-- Configure blanket according to [docs](https://github.com/alex-seville/blanket/blob/master/docs/getting_started_node.md).
-- Run your tests with a command like this:
 
-```sh
-NODE_ENV=test YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha \
-  --require blanket \
-  --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
-```
-### [Mocha](http://mochajs.org/) + [JSCoverage](https://github.com/fishbar/jscoverage)
+### Why is Code Coverage Important?
 
-Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/)), but that's also a necessary step.
+While having 100% code coverage *does* ***not guarantee*** that your code is
+free from *any* bugs, it does ensure that every line is 
+being "exercised" so there is *less likelihood* of ***unexpected behaviour***. 
 
-In mocha, if you've got your code instrumented for coverage, the command for a travis build would look something like this:
-```sh
-YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha test -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
-```
-Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Makefile) from one of my projects for an example, especially the test-coveralls build target.  Note: Travis runs `npm test`, so whatever target you create in your Makefile must be the target that `npm test` runs (This is set in package.json's 'scripts' property).
+This ***reduces uncertainty*** *and* ***increases confidence*** in the code 
+written by everyone on your team.
+So when a bug does *inevitably* get discovered, you know
 
-### [Istanbul](https://github.com/gotwarlost/istanbul)
 
-**With Mocha:**
+### What is Coveralls
 
-```sh
-istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
-```
+Coveralls is a code coverage checking service. <br />
+It does one thing well: tracking code coverage. <br />
+It's *free* for open source projects so get started *today*!
 
-**With Jasmine:**
+Features: https://coveralls.io/info/features
 
-```sh
-istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
-```
+## Get Started
 
-### [Nodeunit](https://github.com/caolan/nodeunit) + [JSCoverage](https://github.com/fishbar/jscoverage)
+### Node.JS 
 
-Depend on nodeunit, jscoverage and coveralls:
+For Node.js the easiest way is to use: 
 
-```sh
-npm install nodeunit jscoverage coveralls --save-dev
-```
+- **node-coverals** (by Gregg Caines): https://github.com/cainus/node-coveralls
+- [**Mocha.js**](http://visionmedia.github.io/mocha/)
+- [**Istanbul**](https://github.com/gotwarlost/istanbul)
 
-Add a coveralls script to "scripts" in your `package.json`:
+Other options are available. see: https://coveralls.io/docs/node
 
-```javascript
-"scripts": {
-  "test": "nodeunit test",
-  "coveralls": "jscoverage lib && YOURPACKAGE_COVERAGE=1 nodeunit --reporter=lcov test | coveralls"
-}
-```
+#### Some Code
 
-Ensure your app requires instrumented code when `process.env.YOURPACKAGE_COVERAGE` variable is defined.
+Before we can check code coverage we need to write some code!
+But since this is not the *focus* of this tutorial, I'm not going
+to dwell on it too much. 
 
-Run your tests with a command like this:
+For a more detailed look at the code used here, see: 
+https://github.com/nelsonic/learn-mocha
 
-```sh
-npm run coveralls
-```
+#### Visit Coveralls.io
 
-For detailed instructions on requiring instrumented code, running on Travis and submitting to coveralls [see this guide](https://github.com/alanshaw/nodeunit-lcov-coveralls-example).
+Navigate to: https://coveralls.io where you will see a 
+"Sign in with GitHub" button.
 
-### [Poncho](https://github.com/deepsweet/poncho)
-Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomjs), [Mocha](http://mochajs.org/) and [Blanket](https://github.com/alex-seville/blanket):
-- [Configure](http://visionmedia.github.io/mocha/#browser-support) Mocha for browser
-- [Mark](https://github.com/deepsweet/poncho#usage) target script(s) with `data-cover` html-attribute
-- Run your tests with a command like this:
+![Coveralls login w GitHub](http://i.imgur.com/jAXLW6o.png "Coveralls login")
 
-```sh
-./node_modules/.bin/poncho -R lcov test/test.html | ./node_modules/coveralls/bin/coveralls.js
-```
 
-### [Lab](https://github.com/hapijs/lab)
-```sh
-lab -r lcov | ./node_modules/.bin/coveralls
+#### Add Repo
+
+Click the "Add Repo" link:
+
+![Add Repo](http://i.imgur.com/Q9T54Bq.png "Add repo")
+
+
+#### Find your Repo and Flip the Switch 
+
+![Flip Switch](http://i.imgur.com/rNFNsJK.png "Flip Switch")
+
+
+#### Create .coveralls.yml file and Add Token
+
+![repo_token](http://i.imgur.com/D3CE8Mt.png "repo_token")
+
+Get your repo_token from coveralls and create a **.coveralls.yml** config file.
+
+`vi .coveralls.yml`
+
+
+```yml
+repo_token: Y0urC0verallsRep0TokenGoesHere
 ```
 
-### [nyc](https://github.com/bcoe/nyc)
+Push your code to GitHub to trigger Travis and Coveralls.
 
-works with almost any testing framework. Simply execute
-`npm test` with the `nyc` bin followed by running its reporter:
 
-```
-nyc npm test && nyc report --reporter=text-lcov | coveralls
-```
+#### Done. (Yes, its *That Simple*!)
 
-### [TAP](https://github.com/isaacs/node-tap)
 
-Simply run your tap tests with the `COVERALLS_REPO_TOKEN` environment
-variable set and tap will automatically use `nyc` to report
-coverage to coveralls.
+<br />
 
-### Command Line Parameters
-Usage: coveralls.js [-v] filepath
+### Other Options for JavaScript Code Coverage
 
-#### Optional arguments:
+- General JS: https://coveralls.io/docs/javascript
+- Direct interface with Coveralls API: https://coveralls.io/docs/api 
+(*beyond the scope of this tutorial*)
 
--v, --verbose
 
-filepath - optionally defines the base filepath of your source files.
+<br />
+- - -
 
-## Running locally
+## More
 
-If you're running locally, you must have a `.coveralls.yml` file, as documented in [their documentation](https://coveralls.io/docs/ruby), with your `repo_token` in it; or, you must provide a `COVERALLS_REPO_TOKEN` environment-variable on the command-line.
+### Further Reading
 
-If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COMMIT` environment-variable to the commit hash you wish to reference. If you don't want to use a hash, you can set it to `HEAD` to supply coveralls with the latest commit data. This requires git to be installed and executable on the current PATH.
+Both my JavaScript TDD Tutorials include sections on Code Coverage:
 
-[travis-image]: https://travis-ci.org/nickmerwin/node-coveralls.svg?branch=master
-[travis-url]: https://travis-ci.org/nickmerwin/node-coveralls
+- QUnit: https://github.com/nelsonic/learn-qunit
+- Mocha: https://github.com/nelsonic/learn-mocha
 
-[codeship-image]: https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status
-[codeship-url]: https://www.codeship.io/projects/5622
+StackOverflow threads:
 
-[coveralls-image]: https://coveralls.io/repos/nickmerwin/node-coveralls/badge.svg?branch=master&service=github
-[coveralls-url]: https://coveralls.io/github/nickmerwin/node-coveralls?branch=master
+- http://stackoverflow.com/questions/1475520/unit-testing-code-coverage-do-you-have-100-coverage
 
-## Contributing
+Tutorials:
 
-I generally don't accept pull requests that are untested, or break the build, because I'd like to keep the quality high (this is a coverage tool afterall!).
+- http://boycook.wordpress.com/2013/09/17/javascript-coverage-with-istanbul-and-coveralls-via-travis-ci/
 
-I also don't care for "soft-versioning" or "optimistic versioning" (dependencies that have ^, x, > in them, or anything other than numbers and dots).  There have been too many problems with bad semantic versioning in dependencies, and I'd rather have a solid library than a bleeding edge one.
+### Coveralls Pricing for "Private" (Closed Source) Projects
+
+Like Travis CI, Coveralls is ***free for open source*** projects. <br />
+Unlike Travis CI, Coveralls is "only"
+[**$4.99** per month](https://coveralls.io/pricing) 
+for a private repository! <br />
+(**Travis**'s *entry-level* paid/private plan is 
+[**$129** per month](http://travis-ci.com/plans)!)
+
+### Next
+
+- Code Complexity: http://en.wikipedia.org/wiki/Programming_complexity
+- Why track complexity: http://www.databorough.com/Five-Reasons-to-Measure-the-Complexity-of-Your-Software.html
+- Books to read: http://stackoverflow.com/questions/1711/what-is-the-single-most-influential-book-every-programmer-should-read
+
+> CodeClimate: https://codeclimate.com/github/signup
